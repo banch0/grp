@@ -1,14 +1,16 @@
 package main
 
 import (
+	"context"
 	"flag"
+	"grp/pkg/api"
 	"log"
 	"strconv"
 
 	"google.golang.org/grpc"
 )
 
-func main(){
+func main() {
 	flag.Parse()
 	if flag.NArg() < 2 {
 		log.Fatal("not enough arguments")
@@ -30,7 +32,7 @@ func main(){
 	}
 
 	c := api.NewAdderClient(conn)
-	res, err := c.Add(contxt.Background(), &api.AddRequest{X: int32(x), Y: int32(y)})
+	res, err := c.Add(context.Background(), &api.AddRequest{X: int32(x), Y: int32(y)})
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -3,7 +3,57 @@ syntax = "proto3";
 package api;
 
 service Adder {
-    rpc Add(AddRequest) return (AddResponse) {}
+    rpc Add(AddRequest) returns (AddResponse) {}
+    rpc Check(Code) returns (Link) {}
+    rpc Send(Link) returns (Code) {}
+}
+
+service Register {
+    rpc Hash(HashRequest) returns (HashResponse) {}
+    rpc Validate(ValidateRequest) returns (ValidateResponse) {}
+}
+
+service QrCode {
+    rpc Create(AddData) returns (QrObject) {}
+    rpc Decode(GetData) returns (LastObject) {}
+}
+
+message AddData {
+    string link = 1;
+    string code = 2;
+}
+
+message GetData {
+    string link = 1;
+    string code = 2;
+}
+
+message QrObject {
+    string crypto = 1;
+}
+
+message LastObject {
+    string decod = 1;
+    int32 numb = 2;
+    string hash = 3;
+}
+
+message HashRequest {
+    string password = 1;
+}
+
+message HashResponse {
+    string hash = 1;
+    string err = 2;
+}
+
+message ValidateRequest {
+    string password = 1;
+    string hash = 2;
+}
+
+message ValidateResponse {
+    bool valid = 1;
 }
 
 message AddRequest {
@@ -13,4 +63,14 @@ message AddRequest {
 
 message AddResponse {
     int32 result = 1;
+}
+
+message Code {
+    int32 id = 1;
+    string link = 2;
+}
+
+message Link {
+    int32 id = 1;
+    string code = 2;
 }

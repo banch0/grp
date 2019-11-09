@@ -9,11 +9,15 @@ import (
 	"google.golang.org/grpc"
 )
 
-func main(){
+// type Endpoint func(ctx context.Context, request
+// 	interface{})
+// 	(response interface{}, err error)
+
+func main() {
 	s := grpc.NewServer()
 	srv := &adder.GRPCServer{}
 
-	api.RegsterAdderServer(s, srv)
+	api.RegisterAdderServer(s, srv)
 
 	l, err := net.Listen("tcp", ":8080")
 	if err != nil {
